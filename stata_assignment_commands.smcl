@@ -1,0 +1,101 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\hp\Desktop\stata_assignment_commands.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}30 Nov 2022, 13:35:56
+
+{com}. sysuse auto.dta
+{txt}(1978 Automobile Data)
+
+{com}. ttest price == 7000
+
+{txt}One-sample t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+   price {c |}{res}{col 12}     74{col 22} 6165.257{col 34} 342.8719{col 46} 2949.496{col 58} 5481.914{col 70}   6848.6
+{txt}{hline 9}{c BT}{hline 68}
+    mean = mean({res}price{txt})                                            t = {res} -2.4346
+{txt}Ho: mean = {res}7000                                  {txt}degrees of freedom = {res}      73
+
+   {txt}Ha: mean < {res}7000             {txt}Ha: mean != {res}7000               {txt}Ha: mean > {res}7000
+ {txt}Pr(T < t) = {res}0.0087         {txt}Pr(|T| > |t|) = {res}0.0174          {txt}Pr(T > t) = {res}0.9913
+
+{com}. ttest price, by(foreign)
+
+{txt}Two-sample t test with equal variances
+{hline 9}{c TT}{hline 68}
+   Group{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+Domestic {c |}{res}{col 12}     52{col 22} 6072.423{col 34} 429.4911{col 46} 3097.104{col 58} 5210.184{col 70} 6934.662
+ {txt}Foreign {c |}{res}{col 12}     22{col 22} 6384.682{col 34} 558.9942{col 46} 2621.915{col 58}  5222.19{col 70} 7547.174
+{txt}{hline 9}{c +}{hline 68}
+combined {c |}{res}{col 12}     74{col 22} 6165.257{col 34} 342.8719{col 46} 2949.496{col 58} 5481.914{col 70}   6848.6
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 22}-312.2587{col 34} 754.4488{col 58}-1816.225{col 70} 1191.708
+{txt}{hline 9}{c BT}{hline 68}
+    diff = mean({res}Domestic{txt}) - mean({res}Foreign{txt})                         t = {res} -0.4139
+{txt}Ho: diff = 0                                     degrees of freedom = {res}      72
+
+    {txt}Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = {res}0.3401         {txt}Pr(|T| > |t|) = {res}0.6802          {txt}Pr(T > t) = {res}0.6599
+
+{com}. twoway (scatter price weight)
+{res}
+{com}. pwcorr price weight, sig
+
+             {txt}{c |}    price   weight
+{hline 13}{c +}{hline 18}
+       price {c |} {res}  1.0000 
+             {txt}{c |}
+             {c |}
+      weight {c |} {res}  0.5386   1.0000 
+             {txt}{c |}{res}   0.0000
+             {txt}{c |}
+
+{com}. reg price mpg rep78 weight length displacement
+
+      {txt}Source {c |}       SS       df       MS              Number of obs ={res}      69
+{txt}{hline 13}{char +}{hline 30}           F(  5,    63) ={res}   10.33
+    {txt}   Model {char |} {res}  259835307     5  51967061.4           {txt}Prob > F      = {res} 0.0000
+    {txt}Residual {char |} {res}  316961652    63  5031137.33           {txt}R-squared     = {res} 0.4505
+{txt}{hline 13}{char +}{hline 30}           Adj R-squared = {res} 0.4069
+    {txt}   Total {char |} {res}  576796959    68  8482308.22           {txt}Root MSE      = {res}   2243
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}       price{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}mpg {c |}{col 14}{res}{space 2}-107.6681{col 26}{space 2} 81.19741{col 37}{space 1}   -1.33{col 46}{space 3}0.190{col 54}{space 4}-269.9281{col 67}{space 3} 54.59203
+{txt}{space 7}rep78 {c |}{col 14}{res}{space 2} 943.1564{col 26}{space 2} 306.4385{col 37}{space 1}    3.08{col 46}{space 3}0.003{col 54}{space 4} 330.7879{col 67}{space 3} 1555.525
+{txt}{space 6}weight {c |}{col 14}{res}{space 2} 3.920286{col 26}{space 2}  1.54729{col 37}{space 1}    2.53{col 46}{space 3}0.014{col 54}{space 4} .8282734{col 67}{space 3} 7.012298
+{txt}{space 6}length {c |}{col 14}{res}{space 2}-108.6199{col 26}{space 2} 39.13598{col 37}{space 1}   -2.78{col 46}{space 3}0.007{col 54}{space 4}-186.8269{col 67}{space 3}-30.41292
+{txt}displacement {c |}{col 14}{res}{space 2} 8.000397{col 26}{space 2} 8.217765{col 37}{space 1}    0.97{col 46}{space 3}0.334{col 54}{space 4}-8.421497{col 67}{space 3} 24.42229
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 12207.61{col 26}{space 2} 5783.342{col 37}{space 1}    2.11{col 46}{space 3}0.039{col 54}{space 4} 650.5273{col 67}{space 3}  23764.7
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. graph save Graph "C:\Users\hp\Desktop\stata_assignment_scatter_plot_Graph.gph"
+{res}{txt}(file C:\Users\hp\Desktop\stata_assignment_scatter_plot_Graph.gph saved)
+
+{com}. log off
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\hp\Desktop\stata_assignment_commands.smcl
+  {txt}log type:  {res}smcl
+ {txt}paused on:  {res}30 Nov 2022, 15:14:31
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\hp\Desktop\stata_assignment_commands.smcl
+  {txt}log type:  {res}smcl
+{txt}resumed on:  {res}30 Nov 2022, 15:16:00
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\hp\Desktop\stata_assignment_commands.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}30 Nov 2022, 15:16:16
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
